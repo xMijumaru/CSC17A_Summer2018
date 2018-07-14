@@ -40,6 +40,10 @@ int main(int argc, char** argv) {
     //Display inputs and outputs
     amount=input();
     declare (amount, point1);
+    
+    //delete here
+    delete []point1;
+    point1=nullptr;
     return 0;
 }
 void *print (int amount, emp * point1){
