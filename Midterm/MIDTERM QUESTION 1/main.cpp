@@ -73,6 +73,9 @@ void *print(int amount1, int amount2, info *s, depo *t, write * u, float total1,
     float over=15.0;// the overdraft fee
     last=((total1-total2)+s->bal);
      last=s->bal+(total1-total2);
+     cout << s->name << endl;
+     cout << s->add << endl;
+     cout << s->num << endl;
     if (last>=0){
         cout << "\nThe Account Balance on #" << s->num << " : ";
         cout << last;
@@ -102,6 +105,8 @@ void *insert (int amount1, int amount2, info *s, depo *t, write *u,
 void *input (int & amount1, int & amount2, info *s, int & num){
     cout << "What is the name of the account holder : ";
     cin.getline(s->name, MM);
+    cout << "What is the Address of the person: " << endl;
+    cin.getline (s->add, MM);
     cout << "What is the Account Balance of the holder: ";
     cin>>s->bal;
     cout << "What is the Bank Account Number: ";
