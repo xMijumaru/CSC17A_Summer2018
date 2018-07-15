@@ -91,7 +91,7 @@ int Menu (){
     cout << "Press 1 for Account Balance Problem" << endl;
     cout << "Press 2 for Paycheck Problem" << endl;
     cout << "Press 3 for Message Encryption" << endl;
-    cout << "Press 5 to Message Decryption " << endl;
+    cout << "Press 4 for Message Decryption " << endl;
     cout << "Press 5 for Factorial " << endl;
     cout << "Press 6 for conversions " << endl;
     cout << "Press 7 for the Factor " << endl;
