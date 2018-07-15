@@ -28,7 +28,7 @@ struct emp{
     float total;//total payment
 };
 //function prototypes
-int input ();
+int input99 ();
 void *declare (int, emp *);//declares the variable
 void *print (int, emp * );//prints the amount
 
@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
     emp *point1;//points to the value of the emp
     
     //Display inputs and outputs
-    amount=input();
+    amount=input99();
     declare (amount, point1);
     
     //delete here
@@ -90,7 +90,7 @@ void *declare (int amount, emp * point1){
     print (amount, point1);
 }
 //the first function
-int input (){
+int input99 (){
     int number;
     cout << "How many Employees are going to be calculated?: ";
     cin >> number;//number of employees
