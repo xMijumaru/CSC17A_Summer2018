@@ -132,12 +132,42 @@ Array *fillAry(int n, int modNum){
 Stats *stat(const Array *array){
     //Non-working stub to be completed by the student
     cout<<endl<<"stat function to be completed by the student"<<endl;
+    float total;
     Stats *stats=new Stats;
     stats->mode=new Array;
     stats->mode->size=0;
     int nModes=0;
+    for (int x=0;x<array->size;x++){
+        total+=array->data[x];
+    }
+    stats->avg=static_cast<float>(total)/static_cast<float>(array->size);
+    if (array->size%2==1){
+        int low=0;
+        int high=array->size-1;
+        int middle=(low+high/2);
+        stats->median=array->data[middle];
+    }
+    if (array->size%2==0){
+        int low=0;
+        int high=array->size-1;
+        int middle=(low+high/2);
+        stats->median=(static_cast<float>(array->data[middle])+
+                static_cast<float>(array->data[middle+1]))/2;
+            
+        }    
+    cout << stats->median;
     stats->mode->data=new int[nModes];
     stats->modFreq=1;
-    stats->median=0;
+    int max=0;
+    int mode=array->data[0];
+    for (int x=0;x<array->size;x++){
+        if (array->data[x]==array->data[x+1]){
+            stats->modFreq++;
+            if (stats->modFreq>max){
+                max=stats->modFreq;
+                mode=array->data[x];
+            }
+        }
+    }
     return stats;
 }
