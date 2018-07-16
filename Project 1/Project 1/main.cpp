@@ -47,7 +47,8 @@ void intro (char [], char [], const int );
 //the purpose this function is to show do all the introductions^^^^^^^
 void save (pokemon *, pokemon *, char [], fstream &, ofstream &);
 //this function will save the game ^^^^^^^^^^^^
-void screen (pokemon *, pokemon *, char [], char []);//runs the screen
+void screen (pokemon *, pokemon *, char [], char []);
+//runs the screen
 
 pokemon * xvalues (pokemon *);//assigns the cards to the rivals pokemon
 pokemon * yvalues (pokemon *); //assigns the value to your pokemons
@@ -58,10 +59,11 @@ pokemon * overview (pokemon *, pokemon *, char [], char []);//this part of the g
 
 //does the damage for the pokemon
 
-int menu (int );//runs the choice for the game
-void attack (pokemon *, pokemon *);
-void check (pokemon *); //runs the checks for the pokemons
+int menu (int ,pokemon *, pokemon *);//runs the choice for the game
+void attack (pokemon *, pokemon *, int &, int &);
+void check (pokemon * ); //runs the checks for the pokemons
 
+void pattack (pokemon * , pokemon *,int &, int &, int);
 
 int main(int argc, char** argv) {
     //Set the random number seed
@@ -104,7 +106,7 @@ void save (pokemon* s, pokemon *v, char plyr1[], fstream& in, ofstream & out){
     int choice; //the player will choose if they want to save the game
     in.open("Mars.txt", ios::in|ios::binary);
     out.open("Mars.txt");
-    cout << "Would you like to save the game?" << endl;
+    cout << "\nWould you like to save the game?" << endl;
     cout << "1)Yes\n2)No" << endl;
     cin >> choice;
     while (choice<1||choice>2){
@@ -122,13 +124,14 @@ void save (pokemon* s, pokemon *v, char plyr1[], fstream& in, ofstream & out){
                     out << v[x].attk[y] << " " << endl;
                 }
             }
+             pause (2);
              cout << "The game has been saved " << endl;
         }
         else {
             cout << "Game has not been saved" << endl;
         }
         
-        pause (2);
+       
        
         //close the function
         in.close();
@@ -217,7 +220,7 @@ pokemon * xvalues (pokemon * s){
     s[1].attk[0]="Psychic";//the first attack of pokemon 2
     s[1].attk[1]="Recover";//the second attack of the pokemon 2
     s[1].attk[2]="Shadow Ball";//the third attack of pokemon 2
-    s[1].health=100;//The health for the 2nd pokemon
+    s[1].health=120;//The health for the 2nd pokemon
     s[1].type="Psychic";//the type of the pokemon
    
     s[2].name="Blastoise";//name of the rivals last pokemon
@@ -229,7 +232,8 @@ pokemon * xvalues (pokemon * s){
  
 }
 //the purpose of this function is to run the choice in the menu
-int menu (int x){
+int menu (int x, pokemon * s, pokemon * v){
+   
     int choice;
     cout << endl;
     cout << "Press 1 to Attack" << endl;
@@ -243,21 +247,7 @@ int menu (int x){
     
     return choice;
 }
-//The purpose of this function is to run the attack function for the choice
-void attack (pokemon * v, pokemon *s){
-    int choice;
-    cout << "Which Attack would you like to use : " << endl;
-    for (int x=0;x<3;x++){
-        cout << x+1 << ": " << v[0].attk[x] << endl;
-    }
-    
-    cin >> choice;
-    while (choice>3||choice<1){
-        cout << "Invalid Attack, please choose again: " ;
-        cin >> choice;
-    }
-  
-}
+
 //the purpose of this function is to run the check of the pokemon
 void check (pokemon * v){
     string choice;
@@ -275,30 +265,41 @@ void check (pokemon * v){
 pokemon * overview (pokemon * s, pokemon *v, char rival [], char plyr1[]){
     int option;//runs the options for the player
     int choice;//the player will choose the options
-   
+    int player=1;
+    int pnum;
+    int health1=0; int health2=0;
+    
     while (option!=3){
-        screen (s, v, rival, plyr1);
-        option=menu(choice);
+        int y=rand()%3;
+       player=(player%2)?0:1;
+       pnum=(player==0)?0:1;
+        
+        screen (s, v, rival, plyr1);//prints the screen
+         if (pnum==0){
+        option=menu(choice,s,v);
+       
         switch (option){
             case 1: {
-                attack (v,s);//will run the attacks for the game
-                break;
+                attack (v,s, health1, health2);//will run the attacks for the game
+               break;
             }
             case 2:{
                 check (v);//Checks your pokemon team
                 break;
             }
             case 3:{
-                cout << "Got away Safely, Game Over " << endl;
+                cout << "YOU HAVE LOST THE BATTLE BY RUNNING " << endl;
                 break;
+                 }
             }
+        }
+        else if (pnum==1){
+            cout << rival << " turn to attack " << endl;
         }
     }
     
 }
-void hurt(pokemon * v, pokemon *s){
-    
-}
+
 void screen (pokemon * s, pokemon * v, char rival[], char plyr1[]){
    
     
@@ -312,4 +313,95 @@ void screen (pokemon * s, pokemon * v, char rival[], char plyr1[]){
     cout << "     HP: " << v[0].health << endl;
     cout << "   Type: " << v[0].type << endl;
     cout << endl;
+}
+//The purpose of this function is to run the attack function for the choice
+void attack (pokemon * v, pokemon *s,int & health1, int & health2){
+   
+    int choice;
+    cout << "Which Attack would you like to use : " << endl;
+    for (int x=0;x<3;x++){
+        cout << x+1 << ": " << v[0].attk[x] << endl;
+    }
+    
+    cin >> choice;
+    while (choice>3||choice<1){
+        cout << "Invalid Attack, please choose again: " ;
+        cin >> choice;
+    }
+    pattack(v,s,health1,health2, choice);
+    
+}
+void pattack (pokemon * v, pokemon *s,int & h1, int & h2, int choice){
+    //all of pikachus attacks
+    if(h2==0&&h1==0){
+        if (choice==1){
+            s[h1].health-=40;
+        }
+        else if (choice==2){
+            s[h1].health-=30;
+        }
+        else if (choice==3){
+            s[h1].health-=50;
+        }
+    }
+    //if pikachu attack alakazam
+    if (h2==0&&h1==1){
+        if (choice==1){
+            s[h1].health-=40;
+        }
+        else if (choice==2){
+            s[h1].health-=30;
+        }
+        else if (choice==3){
+            s[h1].health-=50;
+        }
+    }
+    //if pikachu attacks blastoise
+   if (h2==0&&h1==2){
+        if (choice==1){
+            s[h1].health-=40*2;
+        }
+        else if (choice==2){
+            s[h1].health-=30;
+        }
+        else if (choice==3){
+            s[h1].health-=50*2;
+        }
+    }
+    //if charizard attacks
+     if (h2==1&&h1==0){
+        if (choice==1){
+            s[h1].health-=50/2;
+        }
+        else if (choice==2){
+            s[h1].health-=40*2;
+        }
+        else if (choice==3){
+            s[h1].health-=30;
+        }
+    }
+    //if charizard attacks alakazam
+     if (h2==1&&h1==1){
+        if (choice==1){
+            s[h1].health-=50;
+        }
+        else if (choice==2){
+            s[h1].health-=40;
+        }
+        else if (choice==3){
+            s[h1].health-=30;
+        }
+    }
+    //if charizard attacks blastoise
+     if (h2==1&&h1==2){
+        if (choice==1){
+            s[h1].health-=40/2;
+        }
+        else if (choice==2){
+            s[h1].health-=30;
+        }
+        else if (choice==3){
+            s[h1].health-=50/2;
+        }
+    }
 }

@@ -107,8 +107,8 @@ void problem1 (){
     s=person; //the information for the person
     depo *t;//counts all the deposits done
     write *u;//counts all the checks written
-    float total1; //total for the deposits
-    float total2;//total for the checks
+    float total1=0; //total for the deposits
+    float total2=0;//total for the checks
     
     //Display inputs and outputs here
     input (amount1, amount2, s, num);//prompts the user to insert values
