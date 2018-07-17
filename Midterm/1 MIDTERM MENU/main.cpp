@@ -73,7 +73,7 @@ int inN;
           case 2:    problem2();break;
           case 3:    problem3();break;
           case 4:    problem4();break;
-          //case 5:    problem5();break;
+          case 5:    problem5();break;
           //case 6:    problem6();break;
           //case 7:    problem7();break;
          }
@@ -304,5 +304,20 @@ void input999(int & enter, const int max){
     int n4=(enter%1000%100%10+3)%8;
     decrypt=(n3*1000)+(n4*100)+(n1*10)+(n2);
     cout << "Decrypted Number: " << decrypt;
+    
+}
+void problem5(){
+    cout << "Short:  7!"<< endl;
+    cout <<"Unsigned Short: 7!" << endl;
+    cout << "Int:    11!"<<endl;
+    cout << "Long:  11! "<<endl;
+    cout << "Float:  33!"<<endl;
+    cout << "Double: 184!"<<endl;
+    cout << "Bool:   1!"<<endl;
+    cout << "Unsigned Char: 5!"<<endl;
+    cout << "Char:    5!"<<endl;
+    
+   
+
     
 }

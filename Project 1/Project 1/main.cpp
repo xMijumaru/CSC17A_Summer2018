@@ -47,7 +47,7 @@ void intro (char [], char [], const int );
 //the purpose this function is to show do all the introductions^^^^^^^
 void save (pokemon *, pokemon *, char [], fstream &, ofstream &);
 //this function will save the game ^^^^^^^^^^^^
-void screen (pokemon *, pokemon *, char [], char []);
+void screen (pokemon *, pokemon *, char [], char [], int &, int &);
 //runs the screen
 
 pokemon * xvalues (pokemon *);//assigns the cards to the rivals pokemon
@@ -267,14 +267,19 @@ pokemon * overview (pokemon * s, pokemon *v, char rival [], char plyr1[]){
     int choice;//the player will choose the options
     int player=1;
     int pnum;
-    int health1=0; int health2=0;
+    int health1; int health2;
     
+  
     while (option!=3){
+        health1=0;health2=0;
+        if (s[0].health<1){
+         health1=1;   
+        }
         int y=rand()%3;
        player=(player%2)?0:1;
        pnum=(player==0)?0:1;
         
-        screen (s, v, rival, plyr1);//prints the screen
+        screen (s, v, rival, plyr1, health1, health2);//prints the screen
          if (pnum==0){
         option=menu(choice,s,v);
        
@@ -294,24 +299,26 @@ pokemon * overview (pokemon * s, pokemon *v, char rival [], char plyr1[]){
             }
         }
         else if (pnum==1){
+            pause (2); 
+            
             cout << rival << " turn to attack " << endl;
         }
     }
     
 }
 
-void screen (pokemon * s, pokemon * v, char rival[], char plyr1[]){
+void screen (pokemon * s, pokemon * v, char rival[], char plyr1[], int &h1, int &h2){
    
     
     cout << "\nChampion: " << rival << endl;
-    cout << "Pokemon: " << s[0].name << endl;
-    cout << "     HP: " << s[0].health << endl;
-    cout << "   Type: " << s[0].type << endl;
+    cout << "Pokemon: " << s[h1].name << endl;
+    cout << "     HP: " << s[h1].health << endl;
+    cout << "   Type: " << s[h1].type << endl;
     cout << "------------------"<< endl;
     cout << "Player:  " << plyr1 << endl;
-    cout << "Pokemon: " << v[0].name << endl;
-    cout << "     HP: " << v[0].health << endl;
-    cout << "   Type: " << v[0].type << endl;
+    cout << "Pokemon: " << v[h2].name << endl;
+    cout << "     HP: " << v[h2].health << endl;
+    cout << "   Type: " << v[h2].type << endl;
     cout << endl;
 }
 //The purpose of this function is to run the attack function for the choice
@@ -395,13 +402,65 @@ void pattack (pokemon * v, pokemon *s,int & h1, int & h2, int choice){
     //if charizard attacks blastoise
      if (h2==1&&h1==2){
         if (choice==1){
-            s[h1].health-=40/2;
-        }
-        else if (choice==2){
-            s[h1].health-=30;
-        }
-        else if (choice==3){
             s[h1].health-=50/2;
         }
+        else if (choice==2){
+            s[h1].health-=40/2;
+        }
+        else if (choice==3){
+            s[h1].health-=30;
+        }
+        
+    }
+    //of venasaurs attacks
+    if (h2==2&&h1==0){
+        if (choice==1){
+            s[h1].health-=45/2;
+        }
+        else if (choice==2){
+            s[h1].health-=45;
+        }
+        else if (choice==3){
+            if (v[h2].health>=75){
+                v[h2].health=150;
+            }
+            if (v[h2].health<=75&&v[h2].health>0){
+                v[h2].health=150;
+            }
+        }   
+    }
+    //venu alakazam
+     if (h2==2&&h1==1){
+        if (choice==1){
+            s[h1].health-=45;
+        }
+        else if (choice==2){
+            s[h1].health-=45/2;
+        }
+        else if (choice==3){
+          if (v[h2].health>=75){
+                v[h2].health=150;
+            }
+            if (v[h2].health<=75&&v[h2].health>0){
+                v[h2].health=150;
+            }
+        }   
+    }
+    //venu attack blastoise
+   if (h2==2&&h1==2){
+        if (choice==1){
+            s[h1].health-=45*2;
+        }
+        else if (choice==2){
+            s[h1].health-=45;
+        }
+        else if (choice==3){
+          if (v[h2].health>=75){
+                v[h2].health=150;
+            }
+            if (v[h2].health<=75&&v[h2].health>0){
+                v[h2].health=150;
+            }
+        }   
     }
 }
