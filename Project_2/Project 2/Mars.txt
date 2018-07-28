@@ -1,0 +1,13 @@
+Player: j
+1: Pikachu HP: -5 Type: Thunder
+Thunderbolt 
+Body Slam 
+Thunder 
+2: Charizard HP: -60 Type: Fire/Flying
+Flamethrower 
+Earthquake 
+Wing Attack 
+3: Venusaur HP: 133 Type: Grass/Poison
+Razor Leaf 
+Sludge Bomb 
+Synthesis 
